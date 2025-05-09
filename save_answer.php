@@ -1,15 +1,5 @@
 <?php
-// Koneksi ke database
-$host = "localhost";
-$user = "root";
-$pass = "";
-$dbname = "dynamicform";
-
-$conn = new mysqli($host, $user, $pass, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include 'config/database.php'; // Menghubungkan ke database
 
 // Ambil form_id dan data jawaban dari form
 $form_id = $_POST['form_id']; // ID Formulir yang dikirimkan

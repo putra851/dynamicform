@@ -1,15 +1,5 @@
 <?php
-// Koneksi ke database
-$host = 'localhost';
-$user = 'root';
-$pass = '';
-$dbname = 'dynamicform';
-
-$conn = new mysqli($host, $user, $pass, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include 'config/database.php'; // Menghubungkan ke database
 
 
 if (empty($_GET['slug'])) {
