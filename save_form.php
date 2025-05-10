@@ -1,5 +1,7 @@
 <?php
 
+include 'config/database.php';
+
 // Ambil nama form dari input
 $form_name = $_POST['form_name'];
 $form_name = $conn->real_escape_string($form_name);
