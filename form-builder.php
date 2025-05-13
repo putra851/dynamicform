@@ -11,7 +11,7 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-6">
-                <form id="builderForm" method="POST" action="save_form.php">
+                <form id="builderForm" method="POST" action="save_form.php" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label class="form-label fw-bold">Nama Form</label>
                         <input type="text" name="form_name" class="form-control" required placeholder="Contoh: Formulir Pendaftaran">
@@ -24,7 +24,7 @@
 
             <div class="col-md-6">
                 <h4 class="mb-3">Preview</h4>
-                <form class="form-preview border p-3 bg-light rounded" id="previewForm">
+                <form class="form-preview border p-3 bg-light rounded" id="previewForm" enctype="multipart/form-data">
                     <!-- Preview form muncul di sini -->
                 </form>
             </div>
@@ -60,6 +60,7 @@
                         <option value="radio">Radio</option>
                         <option value="checkbox">Checkbox</option>
                         <option value="select">Select</option>
+                        <option value="file">File</option>
                     </select>
                 </div>
                 <div class="mb-2" id="options-${questionId}" style="display: none;">
@@ -140,6 +141,9 @@
                             ${options.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
                         </select>
                     `;
+                    break;
+                case 'file':
+                    inputField = `<input type="file" class="form-control" name="answers[${qid}]" ${isRequired ? 'required' : ''}>`;
                     break;
             }
 

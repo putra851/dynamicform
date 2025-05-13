@@ -31,48 +31,51 @@ $questions = $result_questions->fetch_all(MYSQLI_ASSOC);
 <body>
     <div class="container mt-5">
         <h1><?php echo $form['title']; ?></h1>
-        <form method="POST" action="save_answer.php">
+        <form method="POST" action="save_answer.php" enctype="multipart/form-data">
             <input type="hidden" name="form_id" value="<?php echo $form['id']; ?>">
             <?php foreach ($questions as $question): ?>
-                <div class="mb-3">
-                    <label class="form-label"><?php echo $question['text']; ?> <?php echo $question['is_required'] ? '*' : ''; ?></label>
-                    <?php
-                    switch ($question['type']) {
-                        case 'text':
-                            echo '<input type="text" class="form-control" name="answers[' . $question['id'] . ']"' . ($question['is_required'] ? ' required' : '') . '>';
-                            break;
-                        case 'textarea':
-                            echo '<textarea class="form-control" name="answers[' . $question['id'] . ']"' . ($question['is_required'] ? ' required' : '') . '></textarea>';
-                            break;
-                        case 'radio':
-                            $options = explode(',', $question['options']);
-                            foreach ($options as $index => $option) {
-                                echo '<div class="form-check">
-                                        <input class="form-check-input" type="radio" name="answers[' . $question['id'] . ']" value="' . $option . '" id="radio-' . $question['id'] . '-' . $index . '"' . ($question['is_required'] ? ' required' : '') . '>
-                                        <label class="form-check-label" for="radio-' . $question['id'] . '-' . $index . '">' . $option . '</label>
-                                    </div>';
-                            }
-                            break;
-                        case 'checkbox':
-                            $options = explode(',', $question['options']);
-                            foreach ($options as $index => $option) {
-                                echo '<div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="answers[' . $question['id'] . '][]" value="' . $option . '" id="checkbox-' . $question['id'] . '-' . $index . '"' . ($question['is_required'] ? ' required' : '') . '>
-                                        <label class="form-check-label" for="checkbox-' . $question['id'] . '-' . $index . '">' . $option . '</label>
-                                    </div>';
-                            }
-                            break;
-                        case 'select':
-                            $options = explode(',', $question['options']);
-                            echo '<select class="form-select" name="answers[' . $question['id'] . ']"' . ($question['is_required'] ? ' required' : '') . '>';
-                            foreach ($options as $option) {
-                                echo '<option value="' . $option . '">' . $option . '</option>';
-                            }
-                            echo '</select>';
-                            break;
+            <div class="mb-3">
+                <label class="form-label"><?php echo $question['text']; ?> <?php echo $question['is_required'] ? '*' : ''; ?></label>
+                <?php
+                switch ($question['type']) {
+                case 'text':
+                    echo '<input type="text" class="form-control" name="answers[' . $question['id'] . ']"' . ($question['is_required'] ? ' required' : '') . '>';
+                    break;
+                case 'textarea':
+                    echo '<textarea class="form-control" name="answers[' . $question['id'] . ']"' . ($question['is_required'] ? ' required' : '') . '></textarea>';
+                    break;
+                case 'radio':
+                    $options = explode(',', $question['options']);
+                    foreach ($options as $index => $option) {
+                    echo '<div class="form-check">
+                        <input class="form-check-input" type="radio" name="answers[' . $question['id'] . ']" value="' . $option . '" id="radio-' . $question['id'] . '-' . $index . '"' . ($question['is_required'] ? ' required' : '') . '>
+                        <label class="form-check-label" for="radio-' . $question['id'] . '-' . $index . '">' . $option . '</label>
+                        </div>';
                     }
-                    ?>
-                </div>
+                    break;
+                case 'checkbox':
+                    $options = explode(',', $question['options']);
+                    foreach ($options as $index => $option) {
+                    echo '<div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="answers[' . $question['id'] . '][]" value="' . $option . '" id="checkbox-' . $question['id'] . '-' . $index . '"' . ($question['is_required'] ? ' required' : '') . '>
+                        <label class="form-check-label" for="checkbox-' . $question['id'] . '-' . $index . '">' . $option . '</label>
+                        </div>';
+                    }
+                    break;
+                case 'select':
+                    $options = explode(',', $question['options']);
+                    echo '<select class="form-select" name="answers[' . $question['id'] . ']"' . ($question['is_required'] ? ' required' : '') . '>';
+                    foreach ($options as $option) {
+                    echo '<option value="' . $option . '">' . $option . '</option>';
+                    }
+                    echo '</select>';
+                    break;
+                case 'file':
+                    echo '<input type="file" class="form-control" name="answers[' . $question['id'] . ']"' . ($question['is_required'] ? ' required' : '') . '>';
+                    break;
+                }
+                ?>
+            </div>
             <?php endforeach; ?>
             <button type="submit" class="btn btn-primary">Kirim</button>
         </form>
